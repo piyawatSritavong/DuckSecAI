@@ -25,7 +25,7 @@ import {
 
 export default function Home() {
   const [copied, setCopied] = useState(false);
-  const [activeTab, setActiveTab] = useState("one-liner");
+  const [activeTab, setActiveTab] = useState<"one-liner" | "npm" | "hackable" | "macos">("one-liner");
 
   const commands = {
     "one-liner": "curl -fsSL https://openclaw.ai/install.sh | bash",
@@ -403,19 +403,19 @@ export default function Home() {
 
               {/* Terminal Tabs */}
               <div className="flex flex-wrap items-center justify-center gap-1.5 bg-slate-50 p-1.5 rounded-2xl border border-slate-200">
-                {["one-liner", "npm", "hackable", "macos"].map((tab) => (
-                  <button
-                    key={tab}
-                    onClick={() => setActiveTab(tab)}
-                    className={`px-2 md:px-5 md:py-2 rounded-xl text-[8px] md:text-xs font-black uppercase tracking-widest transition-all ${
-                      activeTab === tab
-                        ? "bg-blue-600 text-white"
-                        : "text-slate-600 hover:text-slate-900 hover:bg-slate-100"
-                    }`}
-                  >
-                    {tab === "one-liner" ? "One-liner" : tab}
-                  </button>
-                ))}
+                {(["one-liner", "npm", "hackable", "macos"] as const).map((tab) => (
+                    <button
+                      key={tab}
+                      onClick={() => setActiveTab(tab)}
+                      className={`px-2 md:px-5 md:py-2 rounded-xl text-[8px] md:text-xs font-black uppercase tracking-widest transition-all ${
+                        activeTab === tab
+                          ? "bg-blue-600 text-white"
+                          : "text-slate-600 hover:text-slate-900 hover:bg-slate-100"
+                      }`}
+                    >
+                      {tab === "one-liner" ? "One-liner" : tab}
+                    </button>
+                  ))}
               </div>
 
               <div className="hidden md:flex items-center gap-6">
