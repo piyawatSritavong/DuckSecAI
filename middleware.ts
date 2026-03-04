@@ -2,11 +2,12 @@ import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
 
 export function middleware(request: NextRequest) {
+  const ip = request.headers.get('x-forwarded-for') || request.headers.get('x-real-ip') || 'unknown';
   const logData = {
     event: {
       url: request.url,
       method: request.method,
-      ip: request.ip || 'unknown',
+      ip: ip,
       userAgent: request.headers.get('user-agent'),
       timestamp: new Date().toISOString()
     }
